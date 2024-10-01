@@ -23,9 +23,36 @@ public class Entity {
     public boolean collisionOn=false;
     GamePanel gp;
     public int actionLockCounter;
+    String dialogue[] = new String[20];
+    int dialogueIndex = 0;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
+    }
+    public void speak() {
+
+        if (dialogue[dialogueIndex] == null)
+            dialogueIndex = 0;
+        gp.ui.currentDialogue = dialogue[dialogueIndex++];
+
+        switch (gp.player.direction) {
+            case "up":
+                this.direction = "down";
+                break;
+            case "down":
+                this.direction = "up";
+                break;
+            case "left":
+                this.direction = "right";
+                break;
+            case "right":
+                this.direction = "left";
+                break;
+
+            default:
+                break;
+        }
+
     }
     public BufferedImage setup(String imagePath) {
         UtilityTool uTool = new UtilityTool();

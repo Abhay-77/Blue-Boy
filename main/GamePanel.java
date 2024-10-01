@@ -26,7 +26,7 @@ public class GamePanel extends JPanel implements Runnable {
     // public final int worldWidth = maxScreenCol * tileSize;
     // public final int worldHeight = maxScreenRow * tileSize;
 
-    KeyHandler keyH = new KeyHandler(this);
+    public KeyHandler keyH = new KeyHandler(this);
     Sound music = new Sound();
     Sound se = new Sound();
     Thread gameThread;
@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
     public int gameState;
     public final int playState = 1;
     public final int pauseState = 2;
+    public final int dialogueState = 3;
 
     int fps = 60;
 
@@ -96,6 +97,9 @@ public class GamePanel extends JPanel implements Runnable {
             }
         }
         if(gameState == pauseState) {
+
+        }
+        if(gameState == dialogueState) {
 
         }
     }
