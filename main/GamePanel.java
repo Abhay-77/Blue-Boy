@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     TileManager tileM = new TileManager(this);
     public SuperObject obj[] = new SuperObject[10];
     public Entity npc[] = new Entity[10];
+    public EventHandler eHandler = new EventHandler(this);
 
     public int gameState;
     public final int titleState = 0;
