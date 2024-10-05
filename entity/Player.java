@@ -31,6 +31,9 @@ public class Player extends Entity{
         worldY=gp.tileSize*21;
         speed=4;
         direction = "down";
+
+        maxLife = 6;
+        life = maxLife;
     }
     public void getPlayerImage() {
         up1 = setup("/player/Walking sprites/boy_up_1");
