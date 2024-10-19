@@ -159,23 +159,8 @@ public class GamePanel extends JPanel implements Runnable {
                 entityList.get(i).draw(g2);
                 
             }
-            for (int i = 0; i < entityList.size(); i++) {
+            entityList.clear();
 
-                entityList.remove(i);
-                
-            }
-
-            // for (int i = 0; i < obj.length; i++) {
-            //     if (obj[i] != null) {
-            //         obj[i].draw(g2);
-            //     }
-            // }
-            // for (int i = 0; i < npc.length; i++) {
-            //     if (npc[i] != null) {
-            //         npc[i].draw(g2);
-            //     }
-            // }
-            // player.draw(g2);
             ui.draw(g2);
 
         }
@@ -183,7 +168,7 @@ public class GamePanel extends JPanel implements Runnable {
         
         long drawEnd = System.nanoTime();
         long passed = drawEnd - drawStart;
-        System.out.println("Draw time : "+passed);
+        // System.out.println("Draw time : "+passed);
         g2.dispose();
     }
     public void playMusic(int i) {
