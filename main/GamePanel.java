@@ -104,7 +104,13 @@ public class GamePanel extends JPanel implements Runnable {
             }
             for (int i = 0; i < monster.length; i++) {
                 if(monster[i]!=null) {
-                    monster[i].update();
+                    if(monster[i].alive == true) {
+                        monster[i].update();
+                    }
+                    if(monster[i].alive == false) {
+                        monster[i] = null;
+                    }
+
                 }
             }
         }
@@ -118,7 +124,7 @@ public class GamePanel extends JPanel implements Runnable {
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
         Graphics2D g2 = (Graphics2D)g;
-        long drawStart=System.nanoTime();
+        // long drawStart=System.nanoTime();
 
         if(gameState == titleState) {
 
@@ -166,8 +172,8 @@ public class GamePanel extends JPanel implements Runnable {
         }
 
         
-        long drawEnd = System.nanoTime();
-        long passed = drawEnd - drawStart;
+        // long drawEnd = System.nanoTime();
+        // long passed = drawEnd - drawStart;
         // System.out.println("Draw time : "+passed);
         g2.dispose();
     }

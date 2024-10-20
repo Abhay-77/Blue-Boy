@@ -14,6 +14,7 @@ public class Player extends Entity {
     public final int screenX;
     public final int screenY;
     int standCounter = 0;
+    public boolean attackCancelled = false;
 
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
@@ -119,6 +120,13 @@ public class Player extends Entity {
 
             }
 
+            if (keyH.enterPressed == true && attackCancelled == false) {
+                attacking = true;
+                spriteCounter = 0;
+            }
+
+            attackCancelled = false;
+
             gp.keyH.enterPressed = false;
 
             spriteCounter++;
@@ -195,11 +203,13 @@ public class Player extends Entity {
     public void damageMonster(int i) {
         if (i != 999) {
             if (gp.monster[i].invincible == false) {
+                gp.playSE(5);
                 gp.monster[i].life--;
                 gp.monster[i].invincible = true;
+                gp.monster[i].damageReaction();
 
                 if (gp.monster[i].life == 0) {
-                    gp.monster[i] = null;
+                    gp.monster[i].dying = true;
                 }
             }
         }
@@ -217,12 +227,10 @@ public class Player extends Entity {
         if (gp.keyH.enterPressed == true) {
 
             if (i != 999) {
-
+                attackCancelled = true;
                 gp.gameState = gp.dialogueState;
                 gp.npc[i].speak();
 
-            } else {
-                attacking = true;
             }
         }
     }
@@ -230,6 +238,7 @@ public class Player extends Entity {
     public void contactMonster(int i) {
         if (i != 999) {
             if (invincible == false) {
+                gp.playSE(6);
                 life -= 1;
                 invincible = true;
             }

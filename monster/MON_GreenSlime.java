@@ -12,7 +12,7 @@ public class MON_GreenSlime extends Entity {
 
         type=2;
         name = "Green Slime";
-        speed=0;
+        speed=1;
         maxLife=4;
         life=maxLife;
 
@@ -60,4 +60,13 @@ public class MON_GreenSlime extends Entity {
 
     }
 
+    public void damageReaction() {
+        actionLockCounter = 0;
+        switch(gp.player.direction) {
+            case "up":  direction="down";break;
+            case "down":  direction="up";break;
+            case "left":  direction="right";break;
+            case "right":  direction="left";break;
+        }
+    }
 }

@@ -76,6 +76,7 @@ public class EventHandler {
     }
     public void damagePit(int col,int row,int gameState) {
             gp.gameState = gameState;
+            gp.playSE(6);
             gp.ui.currentDialogue = "You fell into a pit";
             gp.player.life--;
             // eventRect[col][row].eventDone = true;
@@ -84,6 +85,8 @@ public class EventHandler {
     public void healingPool(int col , int row,int gameState) {
         if(gp.keyH.enterPressed == true) {
             gp.gameState = gameState;
+            gp.player.attackCancelled = true;
+            gp.playSE(2);
             gp.ui.currentDialogue = "You have drink the holy water.\nYour life has been recovered";
             gp.player.life = gp.player.maxLife;
             canTouchEvent = false;
@@ -91,6 +94,8 @@ public class EventHandler {
     }
     public void teleport(int gameState) {
         gp.gameState = gameState;
+        gp.player.attackCancelled = true;
+        gp.playSE(2);
         gp.ui.currentDialogue = "Teleport!";
         gp.player.worldX = gp.tileSize * 37;
         gp.player.worldY = gp.tileSize * 10;

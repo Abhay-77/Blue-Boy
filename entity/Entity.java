@@ -1,11 +1,11 @@
 package entity;
 
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.nio.Buffer;
 
 import javax.imageio.ImageIO;
 
@@ -27,10 +27,13 @@ public class Entity {
     public Rectangle attackArea = new Rectangle(0,0,0,0 );
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionOn = false;
-    GamePanel gp;
+    public GamePanel gp;
     public int actionLockCounter;
     public boolean invincible = false;
     public int invincibleCounter = 0;
+    public boolean alive = true;
+    boolean dying = false;
+    int dyingCounter = 0;
     public boolean attacking = false;
     String dialogue[] = new String[20];
     int dialogueIndex = 0;
@@ -38,6 +41,8 @@ public class Entity {
     public String name;
     public boolean collison = false;
     public int type;
+    boolean hpBarOn = false;
+    int hpBarCounter = 0;
 
     public int maxLife;
     public int life;
@@ -99,6 +104,7 @@ public class Entity {
 
     public void setAction() {
     }
+    public void damageReaction() {}
 
     public void update() {
 
@@ -113,6 +119,7 @@ public class Entity {
 
         if (this.type == 2 && contactPlayer == true) {
             if (gp.player.invincible == false) {
+                gp.playSE(6);
                 gp.player.life -= 1;
                 gp.player.invincible = true;
             }
@@ -192,11 +199,71 @@ public class Entity {
                     break;
             }
 
+            if (type ==2 && hpBarOn == true) {
+                hpBarCounter++;
+                double oneScale = (double)gp.tileSize/maxLife;
+                double hpBarValue = oneScale * life;
+
+                g2.setColor(new Color(35,35,35));
+                g2.fillRect(screenX - 1, screenY - 15, gp.tileSize + 2, 12);
+
+                g2.setColor(new Color(255,0,30));
+                g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+                if (hpBarCounter > 200) {
+                    hpBarCounter = 0;
+                    hpBarOn=false;
+                }
+            }
+
             if (invincible == true) {
-                g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+                hpBarOn=true;
+                hpBarCounter = 0;
+                changeAlpha(g2, .5f);
+            }
+            if (dying == true) {
+                dyingAnimation(g2);
             }
             g2.drawImage(image, screenX, screenY, null);
-            g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+            changeAlpha(g2, 1f);
         }
     }
+
+    public void dyingAnimation(Graphics2D g2) {
+        dyingCounter++;
+        int  i = 5;
+
+        if (dyingCounter <= i) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter> i && dyingCounter <= i*2) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter> i * 2 && dyingCounter <= i * 3) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter> i * 3 && dyingCounter <= i * 4) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter> i * 4 && dyingCounter <= i * 5) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter> i * 5 && dyingCounter <= i * 6) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter> i * 6 && dyingCounter <= i * 7) {
+            changeAlpha(g2, 0f);
+        }
+        if (dyingCounter> i * 7 && dyingCounter <= i * 8) {
+            changeAlpha(g2, 1f);
+        }
+        if (dyingCounter> i * 8) {
+            dying = false;
+            alive = false;
+        }
+        
+    }
+    public void changeAlpha(Graphics2D g2 , float alphaValue) {
+        g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
+    }
+    
 }
