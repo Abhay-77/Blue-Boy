@@ -90,6 +90,7 @@ public class EventHandler {
             gp.ui.currentDialogue = "You have drink the holy water.\nYour life has been recovered";
             gp.player.life = gp.player.maxLife;
             canTouchEvent = false;
+            gp.aSetter.setMonster();
         }
     }
     public void teleport(int gameState) {

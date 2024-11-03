@@ -16,12 +16,16 @@ public class MON_GreenSlime extends Entity {
         maxLife=4;
         life=maxLife;
 
-        solidArea.x = 3;
-        solidArea.y = 20;
+        attack = 5;
+        defense = 0;
+        exp = 2;
+
+        solidArea.x = 4;
+        solidArea.y = 19;
         solidArea.width = 42;
         solidArea.height = 30;
         solidAreaDefaultX = solidArea.x;
-        solidAreaDefaultY = solidArea.y;
+        solidAreaDefaultY = solidArea.y; 
 
         getImage();
     }

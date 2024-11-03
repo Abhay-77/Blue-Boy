@@ -133,7 +133,11 @@ public class Entity {
         if (this.type == 2 && contactPlayer == true) {
             if (gp.player.invincible == false) {
                 gp.playSE(6);
-                gp.player.life -= 1;
+                int damage = attack - gp.player.defense;
+                if (damage < 0) {
+                    damage = 0;
+                }
+                gp.player.life -= damage;
                 gp.player.invincible = true;
             }
         }
@@ -179,6 +183,7 @@ public class Entity {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
+        // g2.fillRect(screenX+solidArea.x,screenY+ solidArea.y, solidArea.width, solidArea.height);
 
         if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX
                 && worldX - gp.tileSize < gp.player.worldX + gp.player.screenX
