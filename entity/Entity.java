@@ -40,7 +40,6 @@ public class Entity {
     public BufferedImage image, image2, image3;
     public String name;
     public boolean collison = false;
-    public int type;
     boolean hpBarOn = false;
     int hpBarCounter = 0;
 
@@ -59,6 +58,16 @@ public class Entity {
 
     public int attackValue;
     public int defenseValue;
+    public String description = "";
+
+    public int type;
+    public final int typePlayer = 0;
+    public final int typeNpc = 1;
+    public final int typeMonster = 2;
+    public final int typeSword = 3;
+    public final int typeAxe = 4;
+    public final int typeShield = 5;
+    public final int typeConsumable = 6;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -130,7 +139,7 @@ public class Entity {
         gp.cChecker.checkEntity(this, gp.monster);
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
-        if (this.type == 2 && contactPlayer == true) {
+        if (this.type == typeMonster && contactPlayer == true) {
             if (gp.player.invincible == false) {
                 gp.playSE(6);
                 int damage = attack - gp.player.defense;
@@ -283,5 +292,5 @@ public class Entity {
     public void changeAlpha(Graphics2D g2 , float alphaValue) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-    
+    public void use(Entity entity) {}
 }
