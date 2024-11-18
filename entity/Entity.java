@@ -31,8 +31,9 @@ public class Entity {
     public int actionLockCounter;
     public boolean invincible = false;
     public int invincibleCounter = 0;
+    public int shotAvailableCounter = 0;
     public boolean alive = true;
-    boolean dying = false;
+    public boolean dying = false;
     int dyingCounter = 0;
     public boolean attacking = false;
     String dialogue[] = new String[20];
@@ -45,6 +46,8 @@ public class Entity {
 
     public int maxLife;
     public int life;
+    public int maxMana;
+    public int mana;
     public int level;
     public int strength;
     public int dexterity;
@@ -55,10 +58,12 @@ public class Entity {
     public int coin;
     public Entity currentWeapon;
     public Entity currentShield;
+    public Projectile projectile;
 
     public int attackValue;
     public int defenseValue;
     public String description = "";
+    public int useCost;
 
     public int type;
     public final int typePlayer = 0;
@@ -140,7 +145,7 @@ public class Entity {
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
         if (this.type == typeMonster && contactPlayer == true) {
-            if (gp.player.invincible == false) {
+            if (gp.player.invincible == false && dying == false) {
                 gp.playSE(6);
                 int damage = attack - gp.player.defense;
                 if (damage < 0) {
@@ -284,7 +289,6 @@ public class Entity {
             changeAlpha(g2, 1f);
         }
         if (dyingCounter> i * 8) {
-            dying = false;
             alive = false;
         }
         
