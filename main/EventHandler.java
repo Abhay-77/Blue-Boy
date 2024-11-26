@@ -27,7 +27,6 @@ public class EventHandler {
                 col=0;
                 row++;
             }
-
         }
     }
 
@@ -41,12 +40,10 @@ public class EventHandler {
         }
 
         if(canTouchEvent == true) {
-
             if(hit(24,16,"right") == true) {damagePit(24,16,gp.dialogueState);}
             // if(hit(24,16,"right") == true) {teleport(gp.dialogueState);}
             if (hit(23, 12, "up") == true) {healingPool(23,12,gp.dialogueState);}
         }
-
     }
     public boolean hit(int col , int row , String reqDirection) {
 
@@ -89,6 +86,7 @@ public class EventHandler {
             gp.playSE(2);
             gp.ui.currentDialogue = "You have drink the holy water.\nYour life has been recovered";
             gp.player.life = gp.player.maxLife;
+            gp.player.mana = gp.player.maxMana;
             canTouchEvent = false;
             gp.aSetter.setMonster();
         }

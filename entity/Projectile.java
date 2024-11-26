@@ -27,7 +27,10 @@ public class Projectile extends Entity {
             }
         }
         else {
-
+            boolean contactPlayer = gp.cChecker.checkPlayer(this);
+            if (gp.player.invincible == false && contactPlayer == true) {
+                damagePlayer(attack);
+            }
         }
 
         switch (direction) {
@@ -59,6 +62,10 @@ public class Projectile extends Entity {
             }
             spriteCounter = 0;
         }
-
     }
+    public boolean haveResource(Entity user) {
+        return true;
+    }
+
+    public void subtractResource(Entity user) {}
 }

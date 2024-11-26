@@ -47,6 +47,9 @@ public class Player extends Entity {
 
         maxLife = 6;
         life = maxLife;
+        maxMana = 4;
+        mana = maxMana;
+        ammo = 10;
         level = 1;
         strength = 1;
         dexterity = 1;
@@ -189,12 +192,13 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 0) {
+        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 0 && projectile.haveResource(this)) {
             projectile.set(worldX,worldY,direction,true,this);
 
             gp.projectileList.add(projectile);
             shotAvailableCounter = 30;
             gp.playSE(10);
+            projectile.subtractResource(this);
         }
 
         if (invincible == true) {

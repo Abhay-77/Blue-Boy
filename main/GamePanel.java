@@ -25,22 +25,23 @@ public class GamePanel extends JPanel implements Runnable {
     public final int screenHeight = maxScreenRow * tileSize;
     public final int maxWorldCol = 50;
     public final int maxWorldRow = 50;
-    // public final int worldWidth = maxScreenCol * tileSize;
-    // public final int worldHeight = maxScreenRow * tileSize;
+
+    int fps = 60;
+    Thread gameThread;
 
     public KeyHandler keyH = new KeyHandler(this);
+    public Player player = new Player(this, keyH);
     Sound music = new Sound();
     Sound se = new Sound();
-    Thread gameThread;
     public CollisionChecker cChecker = new CollisionChecker(this);
     public AssetSetter aSetter = new AssetSetter(this);
     public UI ui = new UI(this);
-    public Player player = new Player(this, keyH);
     TileManager tileM = new TileManager(this);
+    public EventHandler eHandler = new EventHandler(this);
+
     public Entity obj[] = new Entity[10];
     public Entity npc[] = new Entity[10];
     public Entity monster[] = new Entity[20];
-    public EventHandler eHandler = new EventHandler(this);
     ArrayList<Entity> entityList = new ArrayList<>();
     public ArrayList<Entity> projectileList = new ArrayList<>();
 
@@ -51,7 +52,6 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
     public final int characterState = 4;
 
-    int fps = 60;
 
     public GamePanel() {
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));

@@ -13,41 +13,45 @@ import main.GamePanel;
 import main.UtilityTool;
 
 public class Entity {
+    public GamePanel gp;
+    public String name;
     public int worldX, worldY;
     public int speed;
+    public String direction = "down";
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1,
         attackRight2;
-    public String direction = "down";
-    public int spriteCounter = 0;
-    public int spriteNum = 1;
-    // public Rectangle solidArea = new Rectangle(0,0,48,48);
+    public BufferedImage image, image2, image3;
+
     public Rectangle solidArea = new Rectangle(0, 16, 48, 40);
     public Rectangle attackArea = new Rectangle(0,0,0,0 );
     public int solidAreaDefaultX, solidAreaDefaultY;
-    public boolean collisionOn = false;
-    public GamePanel gp;
-    public int actionLockCounter;
-    public boolean invincible = false;
+
+    public int spriteNum = 1;
     public int invincibleCounter = 0;
     public int shotAvailableCounter = 0;
+    int dyingCounter = 0;
+    int dialogueIndex = 0;
+    String dialogue[] = new String[20];
+    
+    public boolean collisionOn = false;
+    public boolean invincible = false;
     public boolean alive = true;
     public boolean dying = false;
-    int dyingCounter = 0;
     public boolean attacking = false;
-    String dialogue[] = new String[20];
-    int dialogueIndex = 0;
-    public BufferedImage image, image2, image3;
-    public String name;
     public boolean collison = false;
     boolean hpBarOn = false;
+    
+    public int actionLockCounter;
     int hpBarCounter = 0;
+    public int spriteCounter = 0;
 
     public int maxLife;
     public int life;
     public int maxMana;
     public int mana;
+    public int ammo;
     public int level;
     public int strength;
     public int dexterity;
@@ -145,15 +149,7 @@ public class Entity {
         boolean contactPlayer = gp.cChecker.checkPlayer(this);
 
         if (this.type == typeMonster && contactPlayer == true) {
-            if (gp.player.invincible == false && dying == false) {
-                gp.playSE(6);
-                int damage = attack - gp.player.defense;
-                if (damage < 0) {
-                    damage = 0;
-                }
-                gp.player.life -= damage;
-                gp.player.invincible = true;
-            }
+            damagePlayer(attack);
         }
 
         if (collisionOn == false) {
@@ -191,8 +187,21 @@ public class Entity {
                 invincibleCounter = 0;
             }
         }
+        if (shotAvailableCounter > 0) {
+            shotAvailableCounter--;
+        }
     }
-
+    void damagePlayer(int attack) {
+        if (gp.player.invincible == false && dying == false) {
+            gp.playSE(6);
+            int damage = attack - gp.player.defense;
+            if (damage < 0) {
+                damage = 0;
+            }
+            gp.player.life -= damage;
+            gp.player.invincible = true;
+        }
+    }
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
