@@ -68,6 +68,7 @@ public class Entity {
     public int defenseValue;
     public String description = "";
     public int useCost;
+    public int value = 5;
 
     public int type;
     public final int typePlayer = 0;
@@ -77,6 +78,7 @@ public class Entity {
     public final int typeAxe = 4;
     public final int typeShield = 5;
     public final int typeConsumable = 6;
+    public final int typePickupOnly = 7;
 
     public Entity(GamePanel gp) {
         this.gp = gp;
@@ -136,7 +138,17 @@ public class Entity {
     public void setAction() {
     }
     public void damageReaction() {}
-
+    public void checkDrop() {}
+    public void dropItem(Entity droppedItem) {
+        for (int i = 0; i < gp.obj.length; i++) {
+            if (gp.obj[i] == null) {
+                gp.obj[i] = droppedItem;
+                droppedItem.worldX = worldX;
+                droppedItem.worldY = worldY;
+                break;
+            }
+        }
+    }
     public void update() {
 
         setAction();

@@ -84,7 +84,7 @@ public class EventHandler {
             gp.gameState = gameState;
             gp.player.attackCancelled = true;
             gp.playSE(2);
-            gp.ui.currentDialogue = "You have drink the holy water.\nYour life has been recovered";
+            gp.ui.currentDialogue = "You have drink the holy water.\nYour life and mana has been recovered.";
             gp.player.life = gp.player.maxLife;
             gp.player.mana = gp.player.maxMana;
             canTouchEvent = false;
