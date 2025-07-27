@@ -3,7 +3,7 @@
 
 **Blue Boy** is a classic-style 2D pixel art game built entirely in Java **from scratch**, with no external game engine or framework. Inspired by retro RPGs and adventure games, Blue Boy offers an old-school visual and gameplay experience rendered on a grid-based tile map.
 
-![Gameplay Screenshot](./screenshot.png)
+![Gameplay Screenshot](./res/Screenshot/startscreen.png)
 
 ---
 
@@ -99,7 +99,7 @@ This project is licensed under the MIT License. See `LICENSE` for more informati
 
 ## 📷 Screenshot
 
-![Blue Boy Gameplay](./res/Screenshot/image.png)
+![Blue Boy Gameplay](./res/Screenshot/startlocation.png)
 
 ---
 
