@@ -13,6 +13,8 @@ public class OBJ_Axe extends Entity {
         down1 = setup("/Objects/axe");
         attackValue = 2;
         description = "[Woodcutter's Axe]\nCan cut trees.";
+        attackArea.width = 36;
+        attackArea.height = 20;
     }
 
 }

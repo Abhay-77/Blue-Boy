@@ -146,6 +146,8 @@ public class Player extends Entity {
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
             contactMonster(monsterIndex);
 
+            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+
             gp.eHandler.checkEvent();
 
             if (collisionOn == false && keyH.enterPressed == false) {
@@ -192,8 +194,9 @@ public class Player extends Entity {
             }
         }
 
-        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 0 && projectile.haveResource(this)) {
-            projectile.set(worldX,worldY,direction,true,this);
+        if (gp.keyH.shotKeyPressed == true && projectile.alive == false && shotAvailableCounter == 0
+                && projectile.haveResource(this)) {
+            projectile.set(worldX, worldY, direction, true, this);
 
             gp.projectileList.add(projectile);
             shotAvailableCounter = 30;
@@ -255,7 +258,10 @@ public class Player extends Entity {
             solidArea.height = attackArea.height;
 
             int monsterIndex = gp.cChecker.checkEntity(this, gp.monster);
-            damageMonster(monsterIndex,attack);
+            damageMonster(monsterIndex, attack);
+
+            int iTileIndex = gp.cChecker.checkEntity(this, gp.iTile);
+            damageInteractiveTile(iTileIndex);
 
             worldX = currentWorldX;
             worldY = currentWorldY;
@@ -269,7 +275,18 @@ public class Player extends Entity {
         }
     }
 
-    public void damageMonster(int i,int attack) {
+    private void damageInteractiveTile(int i) {
+        if (i != 999 && gp.iTile[i].destructible && gp.iTile[i].isCorrectItem(this) && !gp.iTile[i].invincible) {
+            gp.iTile[i].playSE();
+            gp.iTile[i].life -= currentWeapon.attackValue;
+            gp.iTile[i].invincible = true;
+            if (gp.iTile[i].life <= 0) {
+                gp.iTile[i] = gp.iTile[i].getDestroyedForm();
+            }
+        }
+    }
+
+    public void damageMonster(int i, int attack) {
         if (i != 999) {
             if (gp.monster[i].invincible == false) {
                 gp.playSE(5);
@@ -315,8 +332,7 @@ public class Player extends Entity {
         if (i != 999) {
             if (gp.obj[i].type == typePickupOnly) {
                 gp.obj[i].use(this);
-            }
-            else {
+            } else {
                 String text;
                 if (inventory.size() != maxInventorySize) {
                     inventory.add(gp.obj[i]);

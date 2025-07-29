@@ -77,7 +77,7 @@ public class KeyHandler implements KeyListener {
 
                 }
                 if (gp.ui.commandNum != 3) {
-                    gp.playMusic(0);
+                    // gp.playMusic(0);
                 }
                 if (gp.ui.commandNum == 3) {
                     gp.ui.commandNum = 0;
