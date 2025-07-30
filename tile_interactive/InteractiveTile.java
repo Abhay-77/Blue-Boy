@@ -12,6 +12,8 @@ public class InteractiveTile extends Entity {
 
         this.worldX = col;
         this.worldY = row;
+
+        invincibleEffect = false;
     }
 
     public boolean isCorrectItem(Entity entity) {

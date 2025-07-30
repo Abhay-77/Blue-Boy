@@ -21,11 +21,11 @@ public class Entity {
 
     public BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     public BufferedImage attackUp1, attackUp2, attackDown1, attackDown2, attackLeft1, attackLeft2, attackRight1,
-        attackRight2;
+            attackRight2;
     public BufferedImage image, image2, image3;
 
     public Rectangle solidArea = new Rectangle(0, 16, 48, 40);
-    public Rectangle attackArea = new Rectangle(0,0,0,0 );
+    public Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     public int solidAreaDefaultX, solidAreaDefaultY;
 
     public int spriteNum = 1;
@@ -34,7 +34,7 @@ public class Entity {
     int dyingCounter = 0;
     int dialogueIndex = 0;
     String dialogue[] = new String[20];
-    
+
     public boolean collisionOn = false;
     public boolean invincible = false;
     public boolean alive = true;
@@ -42,7 +42,8 @@ public class Entity {
     public boolean attacking = false;
     public boolean collison = false;
     boolean hpBarOn = false;
-    
+    public boolean invincibleEffect = true;
+
     public int actionLockCounter;
     int hpBarCounter = 0;
     public int spriteCounter = 0;
@@ -122,7 +123,8 @@ public class Entity {
         return scaledImage;
 
     }
-    public BufferedImage setup(String imagePath , int width, int height) {
+
+    public BufferedImage setup(String imagePath, int width, int height) {
         UtilityTool uTool = new UtilityTool();
         BufferedImage scaledImage = null;
         try {
@@ -137,8 +139,13 @@ public class Entity {
 
     public void setAction() {
     }
-    public void damageReaction() {}
-    public void checkDrop() {}
+
+    public void damageReaction() {
+    }
+
+    public void checkDrop() {
+    }
+
     public void dropItem(Entity droppedItem) {
         for (int i = 0; i < gp.obj.length; i++) {
             if (gp.obj[i] == null) {
@@ -149,6 +156,7 @@ public class Entity {
             }
         }
     }
+
     public void update() {
 
         setAction();
@@ -204,6 +212,7 @@ public class Entity {
             shotAvailableCounter--;
         }
     }
+
     void damagePlayer(int attack) {
         if (gp.player.invincible == false && dying == false) {
             gp.playSE(6);
@@ -215,11 +224,11 @@ public class Entity {
             gp.player.invincible = true;
         }
     }
+
     public void draw(Graphics2D g2) {
         BufferedImage image = null;
         int screenX = worldX - gp.player.worldX + gp.player.screenX;
         int screenY = worldY - gp.player.worldY + gp.player.screenY;
-        // g2.fillRect(screenX+solidArea.x,screenY+ solidArea.y, solidArea.width, solidArea.height);
 
         if (worldX + gp.tileSize > gp.player.worldX - gp.player.screenX
                 && worldX - gp.tileSize < gp.player.worldX + gp.player.screenX
@@ -253,24 +262,24 @@ public class Entity {
                     break;
             }
 
-            if (type ==2 && hpBarOn == true) {
+            if (type == typeMonster && hpBarOn == true) {
                 hpBarCounter++;
-                double oneScale = (double)gp.tileSize/maxLife;
+                double oneScale = (double) gp.tileSize / maxLife;
                 double hpBarValue = oneScale * life;
 
-                g2.setColor(new Color(35,35,35));
+                g2.setColor(new Color(35, 35, 35));
                 g2.fillRect(screenX - 1, screenY - 15, gp.tileSize + 2, 12);
 
-                g2.setColor(new Color(255,0,30));
-                g2.fillRect(screenX, screenY - 15, (int)hpBarValue, 10);
+                g2.setColor(new Color(255, 0, 30));
+                g2.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
                 if (hpBarCounter > 200) {
                     hpBarCounter = 0;
-                    hpBarOn=false;
+                    hpBarOn = false;
                 }
             }
 
-            if (invincible == true) {
-                hpBarOn=true;
+            if (invincible == true && invincibleEffect) {
+                hpBarOn = true;
                 hpBarCounter = 0;
                 changeAlpha(g2, .5f);
             }
@@ -284,39 +293,77 @@ public class Entity {
 
     public void dyingAnimation(Graphics2D g2) {
         dyingCounter++;
-        int  i = 5;
+        int i = 5;
 
         if (dyingCounter <= i) {
             changeAlpha(g2, 0f);
         }
-        if (dyingCounter> i && dyingCounter <= i*2) {
+        if (dyingCounter > i && dyingCounter <= i * 2) {
             changeAlpha(g2, 1f);
         }
-        if (dyingCounter> i * 2 && dyingCounter <= i * 3) {
+        if (dyingCounter > i * 2 && dyingCounter <= i * 3) {
             changeAlpha(g2, 0f);
         }
-        if (dyingCounter> i * 3 && dyingCounter <= i * 4) {
+        if (dyingCounter > i * 3 && dyingCounter <= i * 4) {
             changeAlpha(g2, 1f);
         }
-        if (dyingCounter> i * 4 && dyingCounter <= i * 5) {
+        if (dyingCounter > i * 4 && dyingCounter <= i * 5) {
             changeAlpha(g2, 0f);
         }
-        if (dyingCounter> i * 5 && dyingCounter <= i * 6) {
+        if (dyingCounter > i * 5 && dyingCounter <= i * 6) {
             changeAlpha(g2, 1f);
         }
-        if (dyingCounter> i * 6 && dyingCounter <= i * 7) {
+        if (dyingCounter > i * 6 && dyingCounter <= i * 7) {
             changeAlpha(g2, 0f);
         }
-        if (dyingCounter> i * 7 && dyingCounter <= i * 8) {
+        if (dyingCounter > i * 7 && dyingCounter <= i * 8) {
             changeAlpha(g2, 1f);
         }
-        if (dyingCounter> i * 8) {
+        if (dyingCounter > i * 8) {
             alive = false;
         }
-        
+
     }
-    public void changeAlpha(Graphics2D g2 , float alphaValue) {
+
+    public void changeAlpha(Graphics2D g2, float alphaValue) {
         g2.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
     }
-    public void use(Entity entity) {}
+
+    public void use(Entity entity) {
+    }
+
+    public Color getParticleColor() {
+        return null;
+    }
+
+    public int getParticleSize() {
+        return 0;
+    }
+
+    public int getParticleSpeed() {
+        return 0;
+    }
+
+    public int getParticleMaxLife() {
+        return 0;
+    }
+
+    public void generateParticle(Entity generator, Entity target) {
+
+        Color color = generator.getParticleColor();
+        int size = generator.getParticleSize();
+        int speed = generator.getParticleSpeed();
+        int maxLife = generator.getParticleMaxLife();
+
+        Particle pl = new Particle(gp, generator, color, size, speed, maxLife, -1, -1);
+        Particle p2 = new Particle(gp, generator, color, size, speed, maxLife, 1, -1);
+        Particle p3 = new Particle(gp, generator, color, size, speed, maxLife, -1, 1);
+        Particle p4 = new Particle(gp, generator, color, size, speed, maxLife, 1, 1);
+        
+        gp.particleList.add(pl);
+        gp.particleList.add(p2);
+        gp.particleList.add(p3);
+        gp.particleList.add(p4);
+        
+    }
 }

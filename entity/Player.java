@@ -8,6 +8,7 @@ import java.util.ArrayList;
 
 import main.GamePanel;
 import main.KeyHandler;
+import obj.OBJ_Axe;
 import obj.OBJ_Fireball;
 import obj.OBJ_Key;
 import obj.OBJ_Shield_Wood;
@@ -280,6 +281,7 @@ public class Player extends Entity {
             gp.iTile[i].playSE();
             gp.iTile[i].life -= currentWeapon.attackValue;
             gp.iTile[i].invincible = true;
+            generateParticle(gp.iTile[i], gp.iTile[i]);
             if (gp.iTile[i].life <= 0) {
                 gp.iTile[i] = gp.iTile[i].getDestroyedForm();
             }

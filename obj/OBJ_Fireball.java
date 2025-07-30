@@ -3,6 +3,7 @@ package obj;
 import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
+import java.awt.Color;
 
 public class OBJ_Fireball extends Projectile {
     public OBJ_Fireball(GamePanel gp) {
@@ -28,10 +29,28 @@ public class OBJ_Fireball extends Projectile {
         right1 = setup("/Projectile/fireball_right_1");
         right2 = setup("/Projectile/fireball_right_2");
     }
+
     public boolean haveResource(Entity user) {
         return user.mana >= useCost;
     }
+
     public void subtractResource(Entity user) {
         user.mana -= useCost;
+    }
+
+    public Color getParticleColor() {
+        return new Color(240,50,0);
+    }
+
+    public int getParticleSize() {
+        return 10;
+    }
+
+    public int getParticleSpeed() {
+        return 1;
+    }
+
+    public int getParticleMaxLife() {
+        return 15;
     }
 }

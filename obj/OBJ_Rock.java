@@ -1,5 +1,7 @@
 package obj;
 
+import java.awt.Color;
+
 import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
@@ -17,6 +19,7 @@ public class OBJ_Rock extends Projectile {
         alive = false;
         getImage();
     }
+
     void getImage() {
         up1 = setup("/Projectile/rock_down_1");
         up2 = setup("/Projectile/rock_down_1");
@@ -27,10 +30,28 @@ public class OBJ_Rock extends Projectile {
         right1 = setup("/Projectile/rock_down_1");
         right2 = setup("/Projectile/rock_down_1");
     }
+
     public boolean haveResource(Entity user) {
         return user.ammo >= useCost;
     }
+
     public void subtractResource(Entity user) {
         user.ammo -= useCost;
+    }
+
+    public Color getParticleColor() {
+        return new Color(40, 50, 0);
+    }
+
+    public int getParticleSize() {
+        return 10;
+    }
+
+    public int getParticleSpeed() {
+        return 1;
+    }
+
+    public int getParticleMaxLife() {
+        return 15;
     }
 }
