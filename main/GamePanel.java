@@ -198,6 +198,8 @@ public class GamePanel extends JPanel implements Runnable {
     void drawToTempScreen() {
         // long drawStart=System.nanoTime();
 
+        g2.setColor(Color.black);
+        g2.fillRect(0, 0, screenWidth2, screenHeight2);
         if (gameState == titleState) {
 
             ui.draw(g2);

@@ -131,6 +131,8 @@ public class UI {
             if (gp.keyH.enterPressed) {
                 subState = 0;
                 gp.gameState = gp.titleState;
+                titleScreenState = 0;
+                commandNum = 0;
             } 
         }
 
@@ -138,7 +140,6 @@ public class UI {
         textX = getXForCenteredText(text);
         textY += gp.tileSize;
         g2.drawString(text, textX, textY);
-        System.err.println(commandNum);
         if (commandNum == 1) {
             g2.drawString(">", textX-25, textY);  
             if (gp.keyH.enterPressed) {
