@@ -37,6 +37,7 @@ public class GamePanel extends JPanel implements Runnable {
     
     int fps = 60;
     Thread gameThread;
+    public boolean fullScreenOn = false;
 
     public KeyHandler keyH = new KeyHandler(this);
     public Player player = new Player(this, keyH);
@@ -62,6 +63,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int pauseState = 2;
     public final int dialogueState = 3;
     public final int characterState = 4;
+    public final int optionsState = 5;
 
 
     public GamePanel() {
@@ -83,7 +85,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        setFullScreen();
+        // setFullScreen();
     }
 
     public void startGameThread() {
@@ -98,7 +100,7 @@ public class GamePanel extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        int drawCount = 0;
+        // int drawCount = 0;
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
@@ -110,10 +112,10 @@ public class GamePanel extends JPanel implements Runnable {
                 drawToTempScreen();
                 drawToScreen();
                 delta--;
-                drawCount++;
+                // drawCount++;
             }
             if (timer >= 1000000000) {
-                drawCount = 0;
+                // drawCount = 0;
                 timer = 0;
             }
         }
