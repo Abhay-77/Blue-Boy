@@ -24,6 +24,9 @@ public class Player extends Entity {
     public ArrayList<Entity> inventory = new ArrayList<>();
     public final int maxInventorySize = 20;
 
+    int defaultWorldX = gp.tileSize * 23;
+    int defaultWorldY = gp.tileSize * 21;
+
     public Player(GamePanel gp, KeyHandler keyH) {
         super(gp);
         this.keyH = keyH;
@@ -41,8 +44,8 @@ public class Player extends Entity {
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 23;
-        worldY = gp.tileSize * 21;
+        worldX = defaultWorldX;
+        worldY = defaultWorldY;
         speed = 4;
         direction = "down";
 
@@ -64,6 +67,19 @@ public class Player extends Entity {
         defense = getDefense();
     }
 
+    public void setDefaultPositions() {
+        worldX = defaultWorldX;
+        worldY = defaultWorldY;
+        direction = "down";
+    }
+
+    public void restoreStatus() {
+        life = maxLife;
+        mana = maxMana;
+        ammo = 10;
+        invincible = false; 
+    }
+
     public int getAttack() {
         attackArea = currentWeapon.attackArea;
         return strength * currentWeapon.attackValue;
@@ -74,6 +90,7 @@ public class Player extends Entity {
     }
 
     public void setItems() {
+        inventory.clear();
         inventory.add(currentWeapon);
         inventory.add(currentShield);
         inventory.add(new OBJ_Key(gp));
@@ -220,6 +237,10 @@ public class Player extends Entity {
         }
         if (mana > maxMana) {
             mana = maxMana;
+        }
+        if (life <= 0) {
+            gp.gameState = gp.gameOverState;
+            gp.playSE(12);
         }
     }
 

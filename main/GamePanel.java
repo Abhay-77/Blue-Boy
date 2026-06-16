@@ -38,6 +38,7 @@ public class GamePanel extends JPanel implements Runnable {
     int fps = 60;
     Thread gameThread;
     public boolean fullScreenOn = false;
+    // public boolean toggleFullScreen = false;
 
     public KeyHandler keyH = new KeyHandler(this);
     public Player player = new Player(this, keyH);
@@ -48,6 +49,7 @@ public class GamePanel extends JPanel implements Runnable {
     public UI ui = new UI(this);
     TileManager tileM = new TileManager(this);
     public EventHandler eHandler = new EventHandler(this);
+    Config config = new Config(this);
 
     public Entity obj[] = new Entity[20];
     public Entity npc[] = new Entity[10];
@@ -64,6 +66,7 @@ public class GamePanel extends JPanel implements Runnable {
     public final int dialogueState = 3;
     public final int characterState = 4;
     public final int optionsState = 5;
+    public final int gameOverState = 6;
 
 
     public GamePanel() {
@@ -85,7 +88,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
         g2 = (Graphics2D) tempScreen.getGraphics();
-        // setFullScreen();
+        if (fullScreenOn) {
+            setFullScreen();
+        }
     }
 
     public void startGameThread() {
@@ -161,6 +166,16 @@ public class GamePanel extends JPanel implements Runnable {
                     }
                 }
             }
+            // if (toggleFullScreen == true) {
+            //     if (fullScreenOn == false) {
+            //         setFullScreen();
+            //         fullScreenOn = true;
+            //     } else if (fullScreenOn == true) {
+            //         resetFullScreen();
+            //         fullScreenOn = false;
+            //     }
+            //     toggleFullScreen = false;
+            // }
             for (int i = 0; i < projectileList.size(); i++) {
                 if (projectileList.get(i) != null) {
                     if (projectileList.get(i).alive == true) {
@@ -295,5 +310,31 @@ public class GamePanel extends JPanel implements Runnable {
         gd.setFullScreenWindow(Main.window);
         screenWidth2 = Main.window.getWidth();
         screenHeight2 = Main.window.getHeight();
+    }
+    
+    void resetFullScreen() {
+
+        GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice gd = ge.getDefaultScreenDevice();
+
+        gd.setFullScreenWindow(null);
+        screenWidth2 = Main.window.getWidth();
+        screenHeight2 = Main.window.getHeight();
+    }
+
+    public void retry() {
+        player.setDefaultPositions();
+        player.restoreStatus();
+        aSetter.setNPC();
+        aSetter.setMonster();
+    }
+
+    public void restart() {
+        player.setDefaultValues();
+        player.setItems();
+        aSetter.setObject();
+        aSetter.setNPC();
+        aSetter.setMonster();
+        aSetter.setInteractiveTile();
     }
 }
