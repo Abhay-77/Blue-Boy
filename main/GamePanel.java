@@ -83,7 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
         aSetter.setNPC();
         aSetter.setMonster();
         aSetter.setInteractiveTile();
-        // playMusic(0);
+        playMusic(0);
         gameState = titleState;
 
         tempScreen = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
@@ -327,6 +327,7 @@ public class GamePanel extends JPanel implements Runnable {
         player.restoreStatus();
         aSetter.setNPC();
         aSetter.setMonster();
+        playMusic(0);
     }
 
     public void restart() {
